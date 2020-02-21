@@ -1,0 +1,27 @@
+Реализовать внутренности функции (каждому по 1) в среде разработки Microsoft Visual C++.
+Описания функций брать в Microsoft Solution Developers Network(MSDN).
+
+1. atoi
+2. ultoa
+3. sscanf
+4. strspn
+5. strncat
+6. strchr
+7. fscanf
+8. snprintf
+9. memcmp
+10. memccpy
+11. strtod
+12. strnset
+13. strnicmp
+14. atof
+15. itoa
+16. memmove
+17. strcmp
+18. memset
+19. memcpy
+20. sprintf
+21. strtol
+22. memchr
+23. snscanf
+24. fprintf
