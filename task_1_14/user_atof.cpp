@@ -1,12 +1,18 @@
 #include "user_atof.hpp"
 
-float user_atof(const char* str) {
-	    double a;           /* the a value in a*10^b */
-    double decplace;    /* number to divide by if decimal point is seen */
-    double b;           /* The b value (exponent) in a*10^b */
 
-    int sign = 1;       /* stores the sign of a */
-    int bsign = 1;      /* stores the sign of b */
+/*
+	double representation = [sign] mantissa(normalized) * 10 ^ [sign]exponent;
+*/
+double user_atof(const char* str) {
+	if (str == nullptr)
+		return 0.;
+	double denormMantissa;    //raw mantissa
+    double decPart;    //for normalization
+    double exp;           //exponent
+
+    int sign = 1;       //mantissa's sign
+    int expSign = 1;      //10^(expSign*p)
 
     while (*str && isspace(*str))
         ++str;
@@ -25,32 +31,32 @@ float user_atof(const char* str) {
         (str[2] == 'f' || str[2] == 'F'))
               return INFINITY * sign;
 
-    for (a = 0; *str && isdigit(*str); ++str)
-        a = a * 10 + (*str - '0');
+    for (denormMantissa = 0; *str && isdigit(*str); ++str)
+        denormMantissa = denormMantissa * 10 + (*str - '0');
 
     if (*str == '.')
         ++str;
-    for (decplace = 1.; *str && isdigit(*str); ++str, decplace *= 10.)
-        a = a * 10. + (*str - '0');
+    for (decPart = 1.; *str && isdigit(*str); ++str, decPart *= 10.)
+        denormMantissa = denormMantissa * 10. + (*str - '0');
 
     if (*str == 'e' || *str == 'E') {
-        /* if the user types a string starting from e, make the base be 1 */
-        if (a == 0)
-            a = 1;
+        //default raw mantissa = 1
+        if (denormMantissa == 0)
+            denormMantissa = 1;
         ++str;
         if (*str == '-') {
-            bsign = -1;
+            expSign = -1;
             ++str;
         }
         if (*str == '+')
             ++str;
-        for (b = 0; *str && isdigit(*str); ++str)
-            b = b * 10 + (*str - '0');
+        for (exp = 0; *str && isdigit(*str); ++str)
+            exp = exp * 10 + (*str - '0');
 
-        b *= bsign;
+        exp *= expSign;
     }
     else
-        b = 0;
+        exp = 0;
 
-    return (a * sign / decplace) * pow(10, b);
+    return static_cast<double>((denormMantissa * sign / decPart) * pow(10, exp));
 }

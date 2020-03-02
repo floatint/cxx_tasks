@@ -1,9 +1,9 @@
-#ifndef ATOF_HPP
-#define ATOF_HPP
+#ifndef USER_ATOF_HPP
+#define USER_ATOF_HPP
 
 #include <cctype>
 #include <math.h>
 
-extern float user_atof(const char* str);
+extern double user_atof(const char* str);
 
 #endif

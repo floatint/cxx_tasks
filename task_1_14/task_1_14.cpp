@@ -3,11 +3,29 @@
 
 #include "task_1_14.hpp"
 
+
 int main()
 {
-	float a = 145.12E+25f;
-	auto f = user_atof("145.12E+25");
-    std::cout << "Hello World!\n"; 
+	//set double width
+	std::cout.precision(OUT_PRECISION);
+	
+	std::string user_input;
+	bool is_terminated = false;
+
+	while (!is_terminated) {
+		std::cout << "Enter number:" << std::endl;
+		std::cin >> user_input;
+		//to lower
+		std::for_each(user_input.begin(), user_input.end(), [](char c) {
+			c = std::tolower(c);
+		});
+		if (user_input == "exit") {
+			is_terminated = true;
+			continue;
+		}
+		//convert
+		std::cout << "Binary representation: " << user_atof(user_input.c_str()) << std::endl;
+	}
 }
 
 // Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
