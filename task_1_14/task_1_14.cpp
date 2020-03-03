@@ -1,4 +1,5 @@
-﻿// task_1_14.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
+﻿
+// task_1_14.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
 //
 
 #include "task_1_14.hpp"
@@ -21,10 +22,10 @@ int main()
 		});
 		if (user_input == "exit") {
 			is_terminated = true;
-			continue;
 		}
 		//convert
-		std::cout << "Binary representation: " << user_atof(user_input.c_str()) << std::endl;
+		else 
+			std::cout << "Binary representation: " << user_atof(user_input.c_str()) << std::endl;
 	}
 }
 
