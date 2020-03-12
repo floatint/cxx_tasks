@@ -37,4 +37,8 @@ Debug
 Release
 task_1_14/Debug
 task_1_14/Release
+task_1_14/x64
+task_2_1/Debug
+task_2_1/Release
+task_2_1/x64
 x64
