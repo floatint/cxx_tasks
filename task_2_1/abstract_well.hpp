@@ -5,58 +5,29 @@
 
 class AbstractWell {
 public:
-	AbstractWell(double& res, double pumpInVolume, double pumpOutVolume) {
-		m_fieldResource = &res;
-		m_pumpInVolume = pumpInVolume;
-		m_pumpOutVolume = pumpOutVolume;
-		m_pumpedInVolume = 0.;
-		m_pumpedOutVolume = 0.;
-	}
-	//TODO: учитывать что целевой ресурс не может быть меньше нуля
+	AbstractWell(double& res, double pumpInVolume, double pumpOutVolume);
 	//закачка
-	void pumpIn() {
-		*m_fieldResource += m_pumpInVolume;
-		m_pumpedInVolume += m_pumpInVolume;
-	}
+	void pumpIn();
 	//откачка
-	void pumpOut() {
-		*m_fieldResource += m_pumpOutVolume;
-		m_pumpedOutVolume += m_pumpOutVolume;
-	}
-	//вклюяить скважину
-	void on() {
-		m_isOn = true;
-	}
+	void pumpOut();
+	//включить скважину
+	void on();
 	//выключить скважину
-	void off() {
-		m_isOn = false;
-	}
+	void off();
 	//получить тип скважины
 	virtual WellType getType() = 0;
 
-	double getPumpedOutVolume() {
-		return m_pumpedOutVolume;
-	}
+	double getPumpedOutVolume();
 
-	double getPumpedInVolume() {
-		return m_pumpedInVolume;
-	}
+	double getPumpedInVolume();
 
-	double getPumpInVolume() {
-		return m_pumpInVolume;
-	}
+	double getPumpInVolume();
 
-	double getPumpOutVolume() {
-		return m_pumpOutVolume;
-	}
+	double getPumpOutVolume();
 
-	void setPumpInVolume(double val) {
-		m_pumpInVolume = val;
-	}
+	void setPumpInVolume(double val);
 
-	void setPumpOutVolume(double val) {
-		m_pumpOutVolume = val;
-	}
+	void setPumpOutVolume(double val);
 private:
 	//скважина включена
 	bool m_isOn;

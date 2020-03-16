@@ -5,10 +5,9 @@
 
 class GasWell : public AbstractWell {
 public:
-	GasWell(double& res, double pumpInVolume, double pumpOutVolume) : AbstractWell(res, pumpInVolume, pumpOutVolume) {};
-	WellType getType() override {
-		return WellType::GasWell;
-	}
+	GasWell(double& res, double pumpInVolume, double pumpOutVolume);
+
+	WellType getType() override;
 };
 
 #endif

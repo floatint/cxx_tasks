@@ -148,8 +148,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="abstract_well.cpp" />
     <ClCompile Include="cli.cpp" />
+    <ClCompile Include="field.cpp" />
+    <ClCompile Include="gas_well.cpp" />
+    <ClCompile Include="oil_well.cpp" />
     <ClCompile Include="task_2_1.cpp" />
+    <ClCompile Include="utils.cpp" />
+    <ClCompile Include="water_well.cpp" />
     <ClCompile Include="well_type.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -159,6 +165,7 @@
     <ClInclude Include="oil_well.hpp" />
     <ClInclude Include="task_2_1.hpp" />
     <ClInclude Include="abstract_well.hpp" />
+    <ClInclude Include="utils.hpp" />
     <ClInclude Include="water_well.hpp" />
     <ClInclude Include="well_type.hpp" />
   </ItemGroup>

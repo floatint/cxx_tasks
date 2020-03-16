@@ -27,10 +27,17 @@
 	well idx set inVol outVol
 */
 
+//system
+#include <iostream>
+#include <map>
+#include <iomanip>
+#include <string>
+#include <functional>
 
 //user
 #include "field.hpp"
 #include "cli.hpp"
+#include "utils.hpp"
 
 
 #endif

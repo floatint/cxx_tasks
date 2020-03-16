@@ -25,6 +25,12 @@
     <Filter Include="Исходные файлы\logic">
       <UniqueIdentifier>{e2d3a727-a06c-4351-8a7b-cb38fd09ed47}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы заголовков\utils">
+      <UniqueIdentifier>{4d4c513e-4a29-4272-8e17-94f7100183fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\utils">
+      <UniqueIdentifier>{a83c8f6b-1480-456f-a102-e12ba3d594b0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="task_2_1.cpp">
@@ -34,6 +40,24 @@
       <Filter>Исходные файлы\cli</Filter>
     </ClCompile>
     <ClCompile Include="well_type.cpp">
+      <Filter>Исходные файлы\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="utils.cpp">
+      <Filter>Исходные файлы\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="abstract_well.cpp">
+      <Filter>Исходные файлы\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="field.cpp">
+      <Filter>Исходные файлы\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="gas_well.cpp">
+      <Filter>Исходные файлы\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="oil_well.cpp">
+      <Filter>Исходные файлы\logic</Filter>
+    </ClCompile>
+    <ClCompile Include="water_well.cpp">
       <Filter>Исходные файлы\logic</Filter>
     </ClCompile>
   </ItemGroup>
@@ -61,6 +85,9 @@
     </ClInclude>
     <ClInclude Include="well_type.hpp">
       <Filter>Файлы заголовков\logic</Filter>
+    </ClInclude>
+    <ClInclude Include="utils.hpp">
+      <Filter>Файлы заголовков\utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
