@@ -22,7 +22,7 @@ int main()
 		Print field status
 	*/
 	cli.addCommand("status", [&f, &cli]() {
-		std::cout << "Field info: " << std::endl;
+		std::cout << "Field state: " << std::endl;
 		std::cout << "Gas volume:" << f.getGasVolume() << std::endl;
 		std::cout << "Oil volume:" << f.getOilVolume() << std::endl;
 		std::cout << "Water volume:" << f.getWaterVolume() << std::endl;
@@ -32,14 +32,90 @@ int main()
 		Print all wells
 	*/
 	cli.addCommand("wells", [&f, &cli]() {
-		
+
+		auto wells = f.getAllWells();
+		int idx = 0;
+		for (auto wIt = wells.first; wIt != wells.second; wIt++) {
+			std::cout << "=============================" << std::endl;
+			std::cout << "ID: " << idx++ << std::endl;
+			std::cout << "Pumped in: " << (*wIt)->getPumpedInVolume() << std::endl;
+			std::cout << "Pumped out: " << (*wIt)->getPumpedOutVolume() << std::endl;
+			std::cout << "Pump in volume: " << (*wIt)->getPumpInVolume() << std::endl;
+			std::cout << "Pump out volume: " << (*wIt)->getPumpOutVolume() << std::endl;
+			std::cout << "Type: " << wellTypeMap[(*wIt)->getType()] << std::endl;
+		}
 	});
 
 	/*
 		Well's control
 	*/
 	cli.addCommand("well", [&f, &cli]() {
-		
+		int wellId;
+		if (!cli.getNextInput(wellId)) {
+			return;
+		}
+		else {
+			AbstractWell* well = nullptr;
+			if (wellId >= f.getWellsCount() || wellId < 0) {
+				std::cout << "Invalid well's index" << std::endl;
+				return;
+			}
+			else {
+				well = *f.getWellById(wellId);
+				std::string subCommand;
+				if (!cli.getNextInput(subCommand)) {
+					return;
+				}
+				else {
+					if ((subCommand != "pump") && (subCommand != "off") && (subCommand != "on") && (subCommand != "set")) {
+						std::cout << "Invalid 'well' command. ";
+					}
+					else {
+						if (subCommand == "set") {
+							double inVol = 0;
+							double outVol = 0;
+							if (!cli.getNextInput(inVol)) {
+								return;
+							}
+							if (!cli.getNextInput(outVol)) {
+								return;
+							}
+							else {
+								well->setPumpInVolume(inVol);
+								well->setPumpOutVolume(outVol);
+							}
+
+						}
+						//pump command
+						if (subCommand == "pump") {
+							std::string arg;
+							if (!cli.getNextInput(arg)) {
+								return;
+							}
+							else {
+								if ((arg != "in") || (arg != "out")) {
+									std::cout << "Well command format: well <index> <pump (in|out)> | <on|off>";
+								}
+								else {
+									if (arg == "in") {
+										well->pumpIn();
+									}
+									else {
+										well->pumpOut();
+									}
+								}
+							}
+						}
+						if (subCommand == "on") {
+							well->on();
+						}
+						else {
+							well->off();
+						}
+					}
+				}
+			}
+		}
 	});
 
 	/*
@@ -51,6 +127,8 @@ int main()
 			std::cout << "Couldn't get user's input" << std::endl;
 		}
 		else {
+			//if (cmd != "pump") || (cmd != "add")
+			 
 			if (cmd != "pump") {
 				std::cout << "Field's control format: field <pump> <in|out>" << std::endl;
 				return;
@@ -58,7 +136,8 @@ int main()
 			else {
 				std::string arg;
 				if (!cli.getNextInput(arg)) {
-					std::cout << "Couldn't get user's input" << std::endl;
+					return;
+					//std::cout << "Couldn't get user's input" << std::endl;
 				}
 				else {
 					if ((arg != "in") && (arg != "out")) {
@@ -66,10 +145,10 @@ int main()
 					}
 					else {
 						if (arg == "in") {
-							std::cout << "I'm pump in" << std::endl;
+							f.pumpIn();
 						}
 						else {
-							std::cout << "I'm pump out" << std::endl;
+							f.pumpOut();
 						}
 					}
 				}
@@ -79,20 +158,6 @@ int main()
 
 	//run
 	cli.processCommands();
-
-	//int a = 0;
-	//cli.getUserInput("Enter the num:", a);
-	/*std::cout << "ID|" << std::setw(3) << std::right
-		<< std::setw(12) << "pumpedIn|"
-		<< std::setw(12) << "pumpedOut|"
-		<< std::setw(15) << "pumpInVolume|"
-		<< std::setw(15) << "pumpOutVolume|"
-		<< std::setw(10) << "Status|"
-		<< std::setw(10) << "Type|"
-		<< std::endl
-		<< "--------------------------------------------------------------------------"
-		<< std::endl;*/
-    std::cout << "Hello World!\n"; 
 }
 
 // Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"

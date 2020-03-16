@@ -5,18 +5,22 @@
 
 class AbstractWell {
 public:
-	AbstractWell(double& res) {
-		m_fieldResource = res;
+	AbstractWell(double& res, double pumpInVolume, double pumpOutVolume) {
+		m_fieldResource = &res;
+		m_pumpInVolume = pumpInVolume;
+		m_pumpOutVolume = pumpOutVolume;
+		m_pumpedInVolume = 0.;
+		m_pumpedOutVolume = 0.;
 	}
 	//TODO: учитывать что целевой ресурс не может быть меньше нуля
 	//закачка
 	void pumpIn() {
-		m_fieldResource += m_pumpInVolume;
+		*m_fieldResource += m_pumpInVolume;
 		m_pumpedInVolume += m_pumpInVolume;
 	}
 	//откачка
 	void pumpOut() {
-		m_fieldResource += m_pumpOutVolume;
+		*m_fieldResource += m_pumpOutVolume;
 		m_pumpedOutVolume += m_pumpOutVolume;
 	}
 	//вклюяить скважину
@@ -29,6 +33,30 @@ public:
 	}
 	//получить тип скважины
 	virtual WellType getType() = 0;
+
+	double getPumpedOutVolume() {
+		return m_pumpedOutVolume;
+	}
+
+	double getPumpedInVolume() {
+		return m_pumpedInVolume;
+	}
+
+	double getPumpInVolume() {
+		return m_pumpInVolume;
+	}
+
+	double getPumpOutVolume() {
+		return m_pumpOutVolume;
+	}
+
+	void setPumpInVolume(double val) {
+		m_pumpInVolume = val;
+	}
+
+	void setPumpOutVolume(double val) {
+		m_pumpOutVolume = val;
+	}
 private:
 	//скважина включена
 	bool m_isOn;
@@ -42,7 +70,7 @@ private:
 	double m_pumpOutVolume;
 protected:
 	//ресурс месторождения
-	double m_fieldResource;
+	double *m_fieldResource;
 };
 
 #endif // ! ABSTRACT_WELL_HPP

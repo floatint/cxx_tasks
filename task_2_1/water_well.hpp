@@ -5,7 +5,7 @@
 
 class WaterWell : public AbstractWell {
 public:
-	WaterWell(double& res) : AbstractWell(res) {};
+	WaterWell(double& res, double pumpInVolume, double pumpOutVolume) : AbstractWell(res, pumpInVolume, pumpOutVolume) {};
 	WellType getType() {
 		return WellType::WaterWell;
 	}

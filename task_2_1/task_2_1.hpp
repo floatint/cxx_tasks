@@ -14,8 +14,19 @@
 	скважин, задания параметром каждой скважины, а также включения/выключения ее работы.
 */
 
-//system
-#include <memory>
+/*
+	CLI
+
+	exit - terminate programm
+	status - get current field state
+	wells - print list of all wells
+	field pump in|out - field pumping
+	field add GAS|OIL|WATER inVol outVol
+	well idx pump in|out
+	well idx on|off
+	well idx set inVol outVol
+*/
+
 
 //user
 #include "field.hpp"

@@ -1,7 +1,7 @@
 #ifndef FIELD_HPP
 #define FIELD_HPP
 
-#include <map>
+#include <vector>
 
 #include "gas_well.hpp"
 #include "oil_well.hpp"
@@ -9,6 +9,14 @@
 
 class Field {
 public:
+	Field() {
+		m_gasVolume = 0.;
+		m_oilVolume = 0.;
+		m_waterVolume = 0.;
+		//add some wells
+		addWell(WellType::GasWell, 0., 0.);
+		addWell(WellType::WaterWell, 1.12, 2.4);
+	}
 	//setters
 	void setGasVolume(double v) {
 		m_gasVolume = v;
@@ -29,17 +37,17 @@ public:
 	double getWaterVolume() {
 		return m_waterVolume;
 	}
-	void addWell(WellType wt) {
+	void addWell(WellType wt, double pumpInVolume, double pumpOutVolume) {
 		switch (wt)
 		{
 		case WellType::GasWell:
-			m_wells.insert(std::make_pair(WellType::GasWell, new GasWell(m_gasVolume)));
+			m_wells.push_back(new GasWell(m_gasVolume, pumpInVolume, pumpOutVolume));
 			break;
 		case WellType::OilWell:
-			m_wells.insert(std::make_pair(WellType::OilWell, new OilWell(m_oilVolume)));
+			m_wells.push_back(new OilWell(m_oilVolume, pumpInVolume, pumpOutVolume));
 			break;
 		case WellType::WaterWell:
-			m_wells.insert(std::make_pair(WellType::WaterWell, new WaterWell(m_waterVolume)));
+			m_wells.push_back(new WaterWell(m_waterVolume, pumpInVolume, pumpOutVolume));
 			break;
 		default:
 			break;
@@ -53,14 +61,29 @@ public:
 	size_t getWellsCount() {
 		return m_wells.size();
 	}
+
+	auto getWellById(int idx) {
+		return m_wells.begin() + idx;
+	}
+
+	void pumpIn() {
+		for (auto w : m_wells) {
+			w->pumpIn();
+		}
+	}
+
+	void pumpOut() {
+		for (auto w : m_wells) {
+			w->pumpOut();
+		}
+	}
 private:
 	//resources
 	double m_gasVolume;
 	double m_oilVolume;
 	double m_waterVolume;
 	//wells
-	//TODO: change to std::vector
-	std::multimap<WellType, AbstractWell*> m_wells;
+	std::vector<AbstractWell*> m_wells;
 };
 
 #endif // !FIELD_HPP
