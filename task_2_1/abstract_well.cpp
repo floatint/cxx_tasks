@@ -14,9 +14,12 @@ void AbstractWell::pumpIn() {
 }
 
 void AbstractWell::pumpOut() {
+	if (*m_fieldResource == 0.)
+		throw std::exception(std::string(wellTypeMap[getType()] + " resource out").c_str());
 	if (*m_fieldResource - m_pumpedOutVolume < 0) {
 		*m_fieldResource = 0.;
 		m_pumpedOutVolume += std::abs(*m_fieldResource - m_pumpedOutVolume);
+		throw std::exception(std::string(wellTypeMap[getType()] + " resource pumped out not fully").c_str());
 	}
 	else {
 		*m_fieldResource -= m_pumpOutVolume;

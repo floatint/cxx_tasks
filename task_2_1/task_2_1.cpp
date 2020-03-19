@@ -117,8 +117,14 @@ int main()
 								else {
 									if (arg == IN)
 										well->pumpIn();
-									else
-										well->pumpOut();
+									else {
+										try {
+											well->pumpOut();
+										}
+										catch (std::exception& ex) {
+											std::cout << ex.what() << std::endl;
+										}
+									}
 								}
 							}
 						}

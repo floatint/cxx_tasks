@@ -57,7 +57,13 @@ void Field::pumpIn() {
 }
 
 void Field::pumpOut() {
-	for (auto w : m_wells) {
-		w->pumpOut();
+	try {
+		for (auto w : m_wells) {
+			w->pumpOut();
+		}
+	}
+	catch (std::exception& ex) {
+		std::cout << ex.what() << std::endl;
+		return;
 	}
 }

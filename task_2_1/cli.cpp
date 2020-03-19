@@ -15,6 +15,8 @@ void CLInterface::processCommands() {
 					m_Commands[command]();
 				}
 				catch (std::exception& ex) {
+					std::cin.clear();
+					std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 					std::cout << "Undefined command" << std::endl;
 				}
 			}
