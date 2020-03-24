@@ -5,11 +5,9 @@
 
 class AbstractWell {
 public:
-	AbstractWell(double& res, double pumpInVolume, double pumpOutVolume);
-	//закачка
-	void pumpIn();
-	//откачка
-	void pumpOut();
+	AbstractWell(double& res, double pumpVolume);
+	//качать(по умолчанию - откачивать)
+	virtual void pump();
 	//включить скважину
 	void on();
 	//выключить скважину
@@ -17,29 +15,24 @@ public:
 	//получить тип скважины
 	virtual WellType getType() = 0;
 
-	double getPumpedOutVolume();
+	double getPumpedVolume();
 
-	double getPumpedInVolume();
 
-	double getPumpInVolume();
+	double getPumpVolume();
 
-	double getPumpOutVolume();
+	void setPumpVolume(double vol) {
+		m_pumpVolume = vol;
+	}
 
-	void setPumpInVolume(double val);
+	bool isOn();
 
-	void setPumpOutVolume(double val);
-private:
+protected:
 	//скважина включена
 	bool m_isOn;
-	//закаченный объем
-	double m_pumpedInVolume;
-	//откаченный объем
-	double m_pumpedOutVolume;
-	//объем одной закачки
-	double m_pumpInVolume;
-	//объем одной откачки
-	double m_pumpOutVolume;
-protected:
+	//закаченный/откаченный объем
+	double m_pumpedVolume;
+	//объем работы одной закачки/откачки
+	double m_pumpVolume;
 	//ресурс месторождения
 	double *m_fieldResource;
 };

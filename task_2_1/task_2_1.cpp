@@ -12,9 +12,10 @@ const std::string WELL = "well";
 const std::string PUMP = "pump";
 const std::string FIELD = "field";
 const std::string ADD = "add";
+const std::string RM = "rm";
 const std::string SET = "set";
-const std::string IN = "in";
-const std::string OUT = "out";
+//const std::string IN = "in";
+//const std::string OUT = "out";
 const std::string ON = "on";
 const std::string OFF = "off";
 const std::string GAS = "gas";
@@ -42,11 +43,12 @@ int main()
 		std::cout << "help - this message" << std::endl;
 		std::cout << "status - current field status" << std::endl;
 		std::cout << "wells - print list of all wells" << std::endl;
-		std::cout << "field pump in|out - field pumping" << std::endl;
-		std::cout << "field add GAS|OIL|WATER inVol outVol - add new well" << std::endl;
-		std::cout << "well idx pump in|out - well's pumping" << std::endl;
+		std::cout << "field pump - field pumping" << std::endl;
+		std::cout << "field add GAS|OIL|WATER vol - add new well" << std::endl;
+		std::cout << "field set GAS|OIL|WATER vol - set field value" << std::endl;
+		std::cout << "well idx pump - well's pumping" << std::endl;
 		std::cout << "well idx on|off - enable/disable well" << std::endl;
-		std::cout << "well idx set inVol outVol - wells's settings" << std::endl;
+		std::cout << "well idx set vol - wells's settings" << std::endl;
 		std::cout << "=========================++++===================" << std::endl;
 	});
 	
@@ -70,10 +72,9 @@ int main()
 		for (auto wIt = wells.first; wIt != wells.second; wIt++) {
 			std::cout << "=============================" << std::endl;
 			std::cout << "ID: " << idx++ << std::endl;
-			std::cout << "Pumped in: " << (*wIt)->getPumpedInVolume() << std::endl;
-			std::cout << "Pumped out: " << (*wIt)->getPumpedOutVolume() << std::endl;
-			std::cout << "Pump in volume: " << (*wIt)->getPumpInVolume() << std::endl;
-			std::cout << "Pump out volume: " << (*wIt)->getPumpOutVolume() << std::endl;
+			std::cout << "Online: " << std::boolalpha << (*wIt)->isOn() << std::endl;
+			std::cout << "Pumped volume: " << (*wIt)->getPumpedVolume() << std::endl;
+			std::cout << "Pump volume: " << (*wIt)->getPumpVolume() << std::endl;
 			std::cout << "Type: " << wellTypeMap[(*wIt)->getType()] << std::endl;
 		}
 	});
@@ -99,33 +100,18 @@ int main()
 					else {
 						//well set
 						if (subCommand == SET) {
-							double inVol = 0;
-							double outVol = 0;
-							if (cli.getNextInput(inVol) && cli.getNextInput(outVol)) {
-								well->setPumpInVolume(inVol);
-								well->setPumpOutVolume(outVol);
+							double vol = 0;
+							if (cli.getNextInput(vol)) {
+								well->setPumpVolume(vol);
 							}
 						}
 						//well pump
 						if (subCommand == PUMP) {
-							std::string arg;
-							if (cli.getNextInput(arg)) {
-								arg = to_lower(arg);
-								if ((arg != IN) && (arg != OUT)) {
-									std::cout << "Invalid 'well pump' arg" << std::endl;
-								}
-								else {
-									if (arg == IN)
-										well->pumpIn();
-									else {
-										try {
-											well->pumpOut();
-										}
-										catch (std::exception& ex) {
-											std::cout << ex.what() << std::endl;
-										}
-									}
-								}
+							try {
+								well->pump();
+							}
+							catch (std::exception& ex) {
+								std::cout << ex.what() << std::endl;
 							}
 						}
 						if (subCommand == ON)
@@ -145,23 +131,17 @@ int main()
 		std::string cmd;
 		if (cli.getNextInput(cmd)) {
 			cmd = to_lower(cmd);
-			if ((cmd != PUMP) && (cmd != ADD)) {
+			if ((cmd != PUMP) && (cmd != ADD) && (cmd != SET) && (cmd != RM)) {
 				std::cout << "Invalid 'field' command" << std::endl;
 			}
 			else {
 				//field pump
 				if (cmd == PUMP) {
-					std::string arg;
-					if (cli.getNextInput(arg)) {
-						if ((arg != IN) && (arg != OUT)) {
-							std::cout << "Invalid 'field pump' arg" << std::endl;
-						}
-						else {
-							if (arg == IN)
-								f.pumpIn();
-							if (arg == OUT)
-								f.pumpOut();
-						}
+					try {
+						f.pump();
+					}
+					catch (std::exception& ex) {
+						std::cout << ex.what() << std::endl;
 					}
 				}
 				//field add
@@ -173,17 +153,48 @@ int main()
 							std::cout << "Invalid 'field add' argument" << std::endl;
 						}
 						else {
-							double inVol = 0;
-							double outVol = 0;
-							if (cli.getNextInput(inVol) && cli.getNextInput(outVol)) {
+							double vol = 0.;
+							if (cli.getNextInput(vol)) {
 								WellType wt;
-								if (wellType == "gas")
+								if (wellType == GAS)
 									wt = WellType::GasWell;
-								if (wellType == "oil")
+								if (wellType == OIL)
 									wt = WellType::OilWell;
-								if (wellType == "water")
+								if (wellType == WATER)
 									wt = WellType::WaterWell;
-								f.addWell(wt, inVol, outVol);
+								f.addWell(wt, vol);
+							}
+						}
+					}
+				}
+				if (cmd == RM) {
+					int wellId;
+					if (cli.getNextInput(wellId)) {
+						if (wellId >= f.getWellsCount() || wellId < 0) {
+							std::cout << "Invalid well's index" << std::endl;
+						}
+						else {
+							f.removeWell(wellId);
+						}
+					}
+				}
+				//field set
+				if (cmd == SET) {
+					std::string arg;
+					if (cli.getNextInput(arg)) {
+						arg = to_lower(arg);
+						double vol = 0.;
+						if ((arg != OIL) && (arg != GAS) && (arg != WATER)) {
+							std::cout << "Invalid 'field set' argument" << std::endl;
+						}
+						else {
+							if (cli.getNextInput(vol)) {
+								if (arg == OIL)
+									f.setOilVolume(vol);
+								if (arg == GAS)
+									f.setGasVolume(vol);
+								if (arg == WATER)
+									f.setWaterVolume(vol);
 							}
 						}
 					}

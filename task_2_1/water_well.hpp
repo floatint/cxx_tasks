@@ -5,7 +5,10 @@
 
 class WaterWell : public AbstractWell {
 public:
-	WaterWell(double& res, double pumpInVolume, double pumpOutVolume);
+	WaterWell(double& res, double pumpVolume);
+
+	void pump() override;
+
 	WellType getType() override;
 };
 

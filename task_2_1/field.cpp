@@ -5,8 +5,8 @@ Field::Field() {
 	m_oilVolume = 0.;
 	m_waterVolume = 0.;
 	//add some wells
-	addWell(WellType::GasWell, 0., 0.);
-	addWell(WellType::WaterWell, 1.12, 2.4);
+	addWell(WellType::GasWell, 0.);
+	addWell(WellType::WaterWell, 1.12);
 }
 //setters
 void Field::setGasVolume(double v) {
@@ -28,17 +28,17 @@ double Field::getOilVolume() {
 double Field::getWaterVolume() {
 	return m_waterVolume;
 }
-void Field::addWell(WellType wt, double pumpInVolume, double pumpOutVolume) {
+void Field::addWell(WellType wt, double pumpVolume) {
 	switch (wt)
 	{
 	case WellType::GasWell:
-		m_wells.push_back(new GasWell(m_gasVolume, pumpInVolume, pumpOutVolume));
+		m_wells.push_back(new GasWell(m_gasVolume, pumpVolume));
 		break;
 	case WellType::OilWell:
-		m_wells.push_back(new OilWell(m_oilVolume, pumpInVolume, pumpOutVolume));
+		m_wells.push_back(new OilWell(m_oilVolume, pumpVolume));
 		break;
 	case WellType::WaterWell:
-		m_wells.push_back(new WaterWell(m_waterVolume, pumpInVolume, pumpOutVolume));
+		m_wells.push_back(new WaterWell(m_waterVolume, pumpVolume));
 		break;
 	default:
 		break;
@@ -50,20 +50,18 @@ size_t Field::getWellsCount() {
 }
 
 
-void Field::pumpIn() {
-	for (auto w : m_wells) {
-		w->pumpIn();
-	}
-}
-
-void Field::pumpOut() {
+void Field::pump() {
 	try {
 		for (auto w : m_wells) {
-			w->pumpOut();
+			w->pump();
 		}
 	}
 	catch (std::exception& ex) {
 		std::cout << ex.what() << std::endl;
 		return;
 	}
+}
+
+void Field::removeWell(int idx) {
+	m_wells.erase(m_wells.cbegin() + idx);
 }

@@ -1,6 +1,6 @@
 #include "task_2_1.hpp"
 
-GasWell::GasWell(double& res, double pumpInVolume, double pumpOutVolume) : AbstractWell(res, pumpInVolume, pumpOutVolume) {};
+GasWell::GasWell(double& res, double pumpVolume) : AbstractWell(res, pumpVolume) {};
 
 WellType GasWell::getType() {
 	return WellType::GasWell;

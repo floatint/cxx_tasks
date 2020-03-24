@@ -25,7 +25,7 @@ public:
 
 	double getWaterVolume();
 
-	void addWell(WellType wt, double pumpInVolume, double pumpOutVolume);
+	void addWell(WellType wt, double pumpVolume);
 
 	auto getAllWells() {
 		return std::pair(m_wells.cbegin(), m_wells.cend());
@@ -37,9 +37,10 @@ public:
 		return m_wells.begin() + idx;
 	}
 
-	void pumpIn();
+	void pump();
 
-	void pumpOut();
+	void removeWell(int idx);
+
 private:
 	//resources
 	double m_gasVolume;
