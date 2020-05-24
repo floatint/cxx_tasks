@@ -4,5 +4,6 @@
 #include <vector>
 #include <exception>
 #include <tuple>
+#include <memory>
 
 #endif

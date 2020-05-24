@@ -3,6 +3,7 @@
 
 #include "qt.hpp"
 #include "messages.hpp"
+#include "htmlfileprovider.hpp"
 
 class HTMLFileWindow : public QWidget {
 public:

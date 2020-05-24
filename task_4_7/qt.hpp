@@ -16,6 +16,8 @@
 #include <QtCore/QFileInfo>
 #include <QtCore/QFile>
 #include <QtCore/QRegExp>
+#include <QtCore/QDebug>
+#include <QDateTime>
 
 
 #endif

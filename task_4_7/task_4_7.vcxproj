@@ -84,14 +84,18 @@
   <ItemGroup>
     <QtMoc Include="mainwindow.hpp" />
     <ClCompile Include="configprovider.cpp" />
+    <ClCompile Include="htmlfileprovider.cpp" />
     <ClCompile Include="htmlfilewindow.cpp" />
+    <ClCompile Include="loggerconfig.cpp" />
     <ClCompile Include="mainwindow.cpp" />
     <ClCompile Include="messages.cpp" />
     <ClCompile Include="task_4_7.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="configprovider.hpp" />
+    <ClInclude Include="htmlfileprovider.hpp" />
     <ClInclude Include="htmlfilewindow.hpp" />
+    <ClInclude Include="loggerconfig.hpp" />
     <ClInclude Include="messages.hpp" />
     <ClInclude Include="qt.hpp" />
     <ClInclude Include="stl.hpp" />

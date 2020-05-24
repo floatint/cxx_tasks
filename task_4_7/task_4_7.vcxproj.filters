@@ -28,11 +28,14 @@
     <Filter Include="Source Files\io">
       <UniqueIdentifier>{bd4e6260-1e59-4da3-99f6-cf5a4ac8b82a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\ui">
+      <UniqueIdentifier>{469be5cc-cee3-4200-bcd6-9be8f833464f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ui">
+      <UniqueIdentifier>{5e66576b-6e58-4292-be10-340558c1cd07}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="mainwindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="task_4_7.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -43,13 +46,17 @@
       <Filter>Source Files\io</Filter>
     </ClCompile>
     <ClCompile Include="htmlfilewindow.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="mainwindow.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="loggerconfig.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <QtMoc Include="mainwindow.hpp">
-      <Filter>Header Files</Filter>
-    </QtMoc>
+    <ClCompile Include="htmlfileprovider.cpp">
+      <Filter>Source Files\io</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="task_4_7.hpp">
@@ -68,7 +75,18 @@
       <Filter>Header Files\io</Filter>
     </ClInclude>
     <ClInclude Include="htmlfilewindow.hpp">
+      <Filter>Header Files\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="loggerconfig.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="htmlfileprovider.hpp">
+      <Filter>Header Files\io</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="mainwindow.hpp">
+      <Filter>Header Files\ui</Filter>
+    </QtMoc>
   </ItemGroup>
 </Project>

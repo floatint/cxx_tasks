@@ -3,9 +3,11 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
+	qInfo("Main window constructor start");
 	m_files = nullptr;
 	m_htmlFilesMenu = nullptr;
     setupUi();
+	qInfo("Main window constructor finish");
 }
 
 void MainWindow::setupUi() {
@@ -44,6 +46,7 @@ void MainWindow::connectUi() {
 }
 
 void MainWindow::openConfigFile() {
+	qInfo("Open config file start");
 	QString configFileName = QFileDialog::getOpenFileName(this, "Select config file");
 	std::vector<QFileInfo> *files = nullptr;
 	if (!configFileName.isEmpty()) {
@@ -52,7 +55,7 @@ void MainWindow::openConfigFile() {
 			files = ConfigProvider::read(QFileInfo(configFileName));
 		}
 		catch (std::exception& ex) {
-			//TODO: log
+			qCritical(ex.what());
 			Messages::showMessage("Error", ex.what());
 		}
 		//if load successfull
@@ -64,12 +67,15 @@ void MainWindow::openConfigFile() {
 			setupHtmlFilesMenu();
 		}
 	} else {
-		//TODO: log
+		//QString msg = "Config file was not selected";
+		qCritical("Config file was not selected");
 		Messages::error("Config file was not selected");
 	};
+	qInfo("Open config file finish");
 }
 
 void MainWindow::setupHtmlFilesMenu() {
+	qInfo("Setup HTML files menu start");
 	if (m_files->size() != 0) {
 		//if already loaded
 		if (m_htmlFilesMenu != nullptr) {
@@ -92,12 +98,15 @@ void MainWindow::setupHtmlFilesMenu() {
 		m_menuBar->addAction(m_htmlFilesMenu->menuAction());
 	}
 	else {
-		//TODO: log
-		Messages::warn("Config file is empty");
+		const char* msg = "Config file is empty";
+		qCritical(msg);
+		Messages::warn(msg);
 	}
+	qInfo("Setup HTML files menu finish");
 }
 
 void MainWindow::openHtmlFile() {
+	qInfo("Open HTML file start");
 	//get sender
 	QObject* obj = sender();
 	//get action
@@ -111,7 +120,7 @@ void MainWindow::openHtmlFile() {
 		fileWindow = new HTMLFileWindow(m_mdiArea, (*m_files)[idx]);
 	}
 	catch (std::exception& ex) {
-		//TODO: log
+		qCritical(ex.what());
 		Messages::error(ex.what());
 	};
 
@@ -119,4 +128,5 @@ void MainWindow::openHtmlFile() {
 		m_mdiArea->addSubWindow(fileWindow);
 		fileWindow->show();
 	};
+	qInfo("Open HTML file finish");
 }
