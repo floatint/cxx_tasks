@@ -26,7 +26,6 @@ void HTMLFileWindow::setupUi() {
 	m_linksTable = new QTableWidget(this);
 	m_linksTable->setColumnCount(TABLE_COL_CNT);
 	m_linksTable->setShowGrid(true);
-	//StringList header{ "Line", "Pos", "Substring" };
 	m_linksTable->setHorizontalHeaderLabels(m_tableHeader);
 	m_linksTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 

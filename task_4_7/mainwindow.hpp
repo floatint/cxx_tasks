@@ -7,6 +7,11 @@
 #include "configprovider.hpp"
 #include "htmlfilewindow.hpp"
 
+/*
+
+	Main window
+
+*/
 class MainWindow : public QMainWindow
 {
     Q_OBJECT

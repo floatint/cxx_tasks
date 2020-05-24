@@ -94,7 +94,7 @@
   <ItemGroup>
     <ClInclude Include="configprovider.hpp" />
     <ClInclude Include="htmlfileprovider.hpp" />
-    <ClInclude Include="htmlfilewindow.hpp" />
+    <QtMoc Include="htmlfilewindow.hpp" />
     <ClInclude Include="loggerconfig.hpp" />
     <ClInclude Include="messages.hpp" />
     <ClInclude Include="qt.hpp" />

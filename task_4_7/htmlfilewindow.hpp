@@ -5,7 +5,13 @@
 #include "messages.hpp"
 #include "htmlfileprovider.hpp"
 
+/*
+	
+	Window for presentation of results of URL matching
+
+*/
 class HTMLFileWindow : public QWidget {
+	Q_OBJECT
 public:
 	explicit HTMLFileWindow(QWidget *parent, const QFileInfo& file);
 //UI PART

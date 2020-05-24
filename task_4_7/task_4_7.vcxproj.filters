@@ -74,9 +74,6 @@
     <ClInclude Include="configprovider.hpp">
       <Filter>Header Files\io</Filter>
     </ClInclude>
-    <ClInclude Include="htmlfilewindow.hpp">
-      <Filter>Header Files\ui</Filter>
-    </ClInclude>
     <ClInclude Include="loggerconfig.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -86,6 +83,9 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="mainwindow.hpp">
+      <Filter>Header Files\ui</Filter>
+    </QtMoc>
+    <QtMoc Include="htmlfilewindow.hpp">
       <Filter>Header Files\ui</Filter>
     </QtMoc>
   </ItemGroup>

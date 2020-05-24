@@ -5,6 +5,11 @@
 #include "stl.hpp"
 #include "messages.hpp"
 
+/*
+
+	Logging configuration
+
+*/
 class LoggerConfig {
 public:
 	static void setLogFile(const QFileInfo& file);
@@ -13,6 +18,7 @@ private:
 	static std::shared_ptr<QFile> m_logFile;
 };
 
+//QDebug message handler
 extern void messageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg);
 
 #endif
