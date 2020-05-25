@@ -1,7 +1,7 @@
 #include "configprovider.hpp"
 
-std::vector<QFileInfo>* ConfigProvider::read(const QFileInfo& configFile) {
-	std::vector<QFileInfo> *fileList = nullptr;
+std::vector<QFileInfo> ConfigProvider::read(const QFileInfo& configFile) {
+	std::vector<QFileInfo> fileList;
 	QString msg;
 	//if file not exists
 	if (!configFile.exists()) {
@@ -13,7 +13,6 @@ std::vector<QFileInfo>* ConfigProvider::read(const QFileInfo& configFile) {
 		throw std::invalid_argument(msg.toStdString());
 	}
 	else {
-		fileList = new std::vector<QFileInfo>();
 		auto t = configFile.filePath();
 		QFile file(configFile.filePath());
 		//try open file
@@ -25,7 +24,7 @@ std::vector<QFileInfo>* ConfigProvider::read(const QFileInfo& configFile) {
 			//fill html files vector
 			auto htmlFileNames = data.split(',', Qt::SplitBehaviorFlags::SkipEmptyParts);
 			for (auto fileIt = htmlFileNames.cbegin(); fileIt != htmlFileNames.cend(); fileIt++) {
-				fileList->push_back(QFileInfo(*fileIt));
+				fileList.push_back(QFileInfo(*fileIt));
 			}
 		}
 		else {

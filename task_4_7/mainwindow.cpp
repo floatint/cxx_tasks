@@ -4,7 +4,6 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
 	qInfo("Main window constructor start");
-	m_files = nullptr;
 	m_htmlFilesMenu = nullptr;
     setupUi();
 	qInfo("Main window constructor finish");
@@ -48,7 +47,7 @@ void MainWindow::connectUi() {
 void MainWindow::openConfigFile() {
 	qInfo("Open config file start");
 	QString configFileName = QFileDialog::getOpenFileName(this, "Select config file");
-	std::vector<QFileInfo> *files = nullptr;
+	std::vector<QFileInfo> files;
 	if (!configFileName.isEmpty()) {
 		//read file
 		try {
@@ -59,13 +58,10 @@ void MainWindow::openConfigFile() {
 			Messages::showMessage("Error", ex.what());
 		}
 		//if load successfull
-		if (files != nullptr) {
-			if (m_files != nullptr)
-				delete m_files;
-			m_files = files;
-			//setup html files menu
-			setupHtmlFilesMenu();
-		}
+		m_files.clear();
+		m_files = files;
+		//setup html files menu
+		setupHtmlFilesMenu();
 	} else {
 		//QString msg = "Config file was not selected";
 		qCritical("Config file was not selected");
@@ -76,7 +72,7 @@ void MainWindow::openConfigFile() {
 
 void MainWindow::setupHtmlFilesMenu() {
 	qInfo("Setup HTML files menu start");
-	if (m_files->size() != 0) {
+	if (m_files.size() != 0) {
 		//if already loaded
 		if (m_htmlFilesMenu != nullptr) {
 			m_menuBar->removeAction(m_htmlFilesMenu->menuAction());
@@ -86,11 +82,11 @@ void MainWindow::setupHtmlFilesMenu() {
 		m_htmlFilesMenu = new QMenu(m_menuBar);
 		m_htmlFilesMenu->setTitle("HTML files");
 		//iterate over file vector and setup actions
-		for (int i = 0; i < m_files->size(); i++) {
+		for (int i = 0; i < m_files.size(); i++) {
 			QAction *htmlFileOpenAction = new QAction(this);
 			//store FileInfo index into action object
 			htmlFileOpenAction->setData(i);
-			htmlFileOpenAction->setText((*m_files)[i].filePath());
+			htmlFileOpenAction->setText(m_files[i].filePath());
 			//connect slot
 			connect(htmlFileOpenAction, &QAction::triggered, this, &MainWindow::openHtmlFile);
 			m_htmlFilesMenu->addAction(htmlFileOpenAction);
@@ -117,7 +113,7 @@ void MainWindow::openHtmlFile() {
 	HTMLFileWindow *fileWindow = nullptr;
 
 	try {
-		fileWindow = new HTMLFileWindow(m_mdiArea, (*m_files)[idx]);
+		fileWindow = new HTMLFileWindow(m_mdiArea, m_files[idx]);
 	}
 	catch (std::exception& ex) {
 		qCritical(ex.what());

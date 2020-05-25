@@ -11,7 +11,7 @@
 */
 class ConfigProvider {
 public:
-	static std::vector<QFileInfo>* read(const QFileInfo& configFile);
+	static std::vector<QFileInfo> read(const QFileInfo& configFile);
 };
 
 #endif

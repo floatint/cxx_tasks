@@ -47,7 +47,7 @@ private:
 	//slots
 	void openConfigFile();
 	//main window data
-	std::vector<QFileInfo> *m_files;
+	std::vector<QFileInfo> m_files;
 };
 
 #endif

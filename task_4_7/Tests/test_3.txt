@@ -1,0 +1,1 @@
+<div>Welcome to ftp://test.ru ! </div><div><p>telnet://some.url</p></div>
